@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "flash-cards-lang",
-    "slug": "flash-cards-lang",
+    "slug": "flash-card-lang",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,15 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "185cfbb1-60ef-4979-a825-19de4d551130"
+      }
+    },
+    "owner": "leonavancini"
   }
 }
