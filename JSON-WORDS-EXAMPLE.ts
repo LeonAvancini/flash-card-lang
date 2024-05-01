@@ -1,0 +1,182 @@
+[
+    {
+      "source": "Der Apfel",
+      "value": "The apple"
+    },
+    {
+      "source": "Die Katze",
+      "value": "The cat"
+    },
+    {
+      "source": "Das Buch",
+      "value": "The book"
+    },
+    {
+      "source": "Die Sonne",
+      "value": "The sun"
+    },
+    {
+      "source": "Der Tisch",
+      "value": "The table"
+    },
+    {
+      "source": "Die Blume",
+      "value": "The flower"
+    },
+    {
+      "source": "Das Auto",
+      "value": "The car"
+    },
+    {
+      "source": "Die Uhr",
+      "value": "The clock"
+    },
+    {
+      "source": "Der Stuhl",
+      "value": "The chair"
+    },
+    {
+      "source": "Die Tür",
+      "value": "The door"
+    },
+    {
+      "source": "Die Stadt",
+      "value": "The city"
+    },
+    {
+      "source": "Der Hund",
+      "value": "The dog"
+    },
+    {
+      "source": "Das Kind",
+      "value": "The child"
+    },
+    {
+      "source": "Der Baum",
+      "value": "The tree"
+    },
+    {
+      "source": "Die Zeitung",
+      "value": "The newspaper"
+    },
+    {
+      "source": "Die Flasche",
+      "value": "The bottle"
+    },
+    {
+      "source": "Die Lampe",
+      "value": "The lamp"
+    },
+    {
+      "source": "Das Glas",
+      "value": "The glass"
+    },
+    {
+      "source": "Die Frau",
+      "value": "The woman"
+    },
+    {
+      "source": "Der Mann",
+      "value": "The man"
+    },
+    {
+      "source": "Die Hand",
+      "value": "The hand"
+    },
+    {
+      "source": "Der Arm",
+      "value": "The arm"
+    },
+    {
+      "source": "Die Wurst",
+      "value": "The sausage"
+    },
+    {
+      "source": "Der Kaffee",
+      "value": "The coffee"
+    },
+    {
+      "source": "Die Milch",
+      "value": "The milk"
+    },
+    {
+      "source": "Der Zucker",
+      "value": "The sugar"
+    },
+    {
+      "source": "Die Butter",
+      "value": "The butter"
+    },
+    {
+      "source": "Das Salz",
+      "value": "The salt"
+    },
+    {
+      "source": "Die Suppe",
+      "value": "The soup"
+    },
+    {
+      "source": "Der Tee",
+      "value": "The tea"
+    },
+    {
+      "source": "Der Computer",
+      "value": "The computer"
+    },
+    {
+      "source": "Das Telefon",
+      "value": "The telephone"
+    },
+    {
+      "source": "Der Fernseher",
+      "value": "The television"
+    },
+    {
+      "source": "Der Kühlschrank",
+      "value": "The refrigerator"
+    },
+    {
+      "source": "Das Fahrrad",
+      "value": "The bicycle"
+    },
+    {
+      "source": "Der Schlüssel",
+      "value": "The key"
+    },
+    {
+      "source": "Die Brille",
+      "value": "The glasses"
+    },
+    {
+      "source": "Der Schuh",
+      "value": "The shoe"
+    },
+    {
+      "source": "Das Kleid",
+      "value": "The dress"
+    },
+    {
+      "source": "Der Hut",
+      "value": "The hat"
+    },
+    {
+      "source": "Die Hose",
+      "value": "The pants"
+    },
+    {
+      "source": "Das Hemd",
+      "value": "The shirt"
+    },
+    {
+      "source": "Der Rock",
+      "value": "The skirt"
+    },
+    {
+      "source": "Der Mantel",
+      "value": "The coat"
+    },
+    {
+      "source": "Die Jacke",
+      "value": "The jacket"
+    },
+  ]
