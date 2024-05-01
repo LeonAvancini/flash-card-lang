@@ -38,13 +38,14 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
         existingList.push(newElement);
 
         await AsyncStorage.setItem("wordList", JSON.stringify(existingList));
-
+        cleanValues();
         onCloseHandler();
       } catch (e) {
         Alert.alert("Error saving");
       }
     }
   };
+
   const cleanValues = () => {
     setSource("");
     setValue("");
@@ -52,7 +53,7 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
 
   return (
     <Modal visible={visible} animationType="slide">
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.mainContainer}>
         <View style={styles.header}>
           <Button title="Go back" onPress={onCloseHandler} />
         </View>
@@ -83,9 +84,15 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    alignItems: "center",
+    marginHorizontal: 20,
+  },
   container: {
     flex: 1,
     alignItems: "center",
+    width: "100%",
   },
   title: {
     fontSize: 20,

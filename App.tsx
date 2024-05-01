@@ -1,4 +1,12 @@
-import { Alert, Button, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Button,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+} from "react-native";
 import Card, { Word } from "./components/Card";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
@@ -13,6 +21,8 @@ export default function App() {
   const [word, setWord] = useState<Word>();
 
   const selectRandomWord = () => {
+    //TODO: Random value should consider weight of values based on assertion value, implement logic after user is able to press a button when they assert
+
     const randomIndex = Math.floor(Math.random() * savedWords.length);
     setWord(savedWords[randomIndex]);
   };
@@ -29,10 +39,13 @@ export default function App() {
     };
 
     fetchData();
-  }, []);
+  }, [showAddCardModal, showImportJsonModal]);
 
   useEffect(() => {
-    if (!!savedWords.length && !word) {
+    if (!savedWords.length) {
+      setWord(undefined);
+    }
+    if (!word) {
       selectRandomWord();
     }
   }, [savedWords]);
@@ -53,6 +66,11 @@ export default function App() {
       </View>
       <View style={styles.container}>
         {word && <Card word={word} onTouchHandler={selectRandomWord} />}
+        {!savedWords.length && (
+          <Text style={styles.noCardText}>
+            Looks like you don't have any cards created. You can add a new one.
+          </Text>
+        )}
       </View>
       <AddNewCardModal
         visible={showAddCardModal}
@@ -78,11 +96,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
+    ...(Platform.OS === "android" && { marginTop: 20 }),
   },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+  },
+  noCardText: {
+    textAlign: "center",
+    fontSize: 20,
+    marginTop: 20,
   },
 });

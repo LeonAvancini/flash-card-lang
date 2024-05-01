@@ -11,6 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 
+//TODO: Allow users to upload json file instead paste an array.
 interface ImportJsonModalProps {
   visible: boolean;
   onCloseHandler: () => void;
@@ -38,6 +39,7 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
       }
 
       await AsyncStorage.setItem("wordList", JSON.stringify(parsedData));
+      setJsonData("");
       onCloseHandler();
     } catch (error: any) {
       Alert.alert("Error", error.message);
@@ -54,7 +56,7 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
           <Text style={styles.title}>Import JSON Data</Text>
           <TextInput
             style={styles.input}
-            placeholder={`Paste JSON here:
+            placeholder={`Paste JSON here without {}:
           [
             {
               "source": "Der Apfel",
