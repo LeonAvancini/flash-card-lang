@@ -4,13 +4,12 @@ import {
   Modal,
   View,
   StyleSheet,
-  Button,
-  TextInput,
   SafeAreaView,
   Alert,
   Text,
 } from "react-native";
-import ButtonLang from "./ButtonLang";
+import ButtonLang from "../components/ButtonLang";
+import TextInputLang from "../components/TextInputLang";
 
 interface AddNewCardModalProps {
   visible: boolean;
@@ -61,13 +60,13 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
         <View style={styles.container}>
           <Text style={styles.title}>Add some values for learn :)</Text>
           <View style={styles.inputContainer}>
-            <TextInput
+            <TextInputLang
               style={styles.input}
               placeholder="Das Auto"
               value={source}
               onChangeText={(text) => setSource(text)}
             />
-            <TextInput
+            <TextInputLang
               style={styles.input}
               placeholder="Car"
               value={value}

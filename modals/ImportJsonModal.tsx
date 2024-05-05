@@ -4,12 +4,12 @@ import {
   Modal,
   View,
   StyleSheet,
-  TextInput,
   Alert,
   Text,
   SafeAreaView,
 } from "react-native";
-import ButtonLang from "./ButtonLang";
+import ButtonLang from "../components/ButtonLang";
+import TextInputLang from "../components/TextInputLang";
 
 //TODO: Allow users to upload json file instead paste an array.
 interface ImportJsonModalProps {
@@ -54,7 +54,7 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
         </View>
         <View style={styles.container}>
           <Text style={styles.title}>Import JSON Data</Text>
-          <TextInput
+          <TextInputLang
             style={styles.input}
             placeholder={`Paste JSON here without {}:
           [
