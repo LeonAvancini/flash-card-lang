@@ -1,6 +1,5 @@
 import {
   Alert,
-  Button,
   SafeAreaView,
   StyleSheet,
   View,
@@ -12,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import AddNewCardModal from "./components/AddNewCardModal";
 import ImportJsonModal from "./components/ImportJsonModal";
+import ButtonLang from "./components/ButtonLang";
 
 export default function App() {
   const [showAddCardModal, setShowAddCardModal] = useState<boolean>(false);
@@ -61,8 +61,14 @@ export default function App() {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.header}>
-        <Button title="Add new card" onPress={toggleAddCardModalVisibility} />
-        <Button title="Import Json" onPress={toggleImportJsonModalVisibility} />
+        <ButtonLang
+          title="Add new card"
+          onPress={toggleAddCardModalVisibility}
+        />
+        <ButtonLang
+          title="Import Json"
+          onPress={toggleImportJsonModalVisibility}
+        />
       </View>
       <View style={styles.container}>
         {word && <Card word={word} onTouchHandler={selectRandomWord} />}
@@ -87,7 +93,6 @@ export default function App() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     margin: 20,
