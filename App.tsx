@@ -9,8 +9,8 @@ import {
 import Card, { Word } from "./components/Card";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import AddNewCardModal from "./components/AddNewCardModal";
-import ImportJsonModal from "./components/ImportJsonModal";
+import AddNewCardModal from "./modals/AddNewCardModal";
+import ImportJsonModal from "./modals/ImportJsonModal";
 import ButtonLang from "./components/ButtonLang";
 
 export default function App() {
