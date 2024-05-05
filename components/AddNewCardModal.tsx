@@ -10,6 +10,7 @@ import {
   Alert,
   Text,
 } from "react-native";
+import ButtonLang from "./ButtonLang";
 
 interface AddNewCardModalProps {
   visible: boolean;
@@ -55,7 +56,7 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.header}>
-          <Button title="Go back" onPress={onCloseHandler} />
+          <ButtonLang title="Go back" onPress={onCloseHandler} />
         </View>
         <View style={styles.container}>
           <Text style={styles.title}>Add some values for learn :)</Text>
@@ -74,8 +75,8 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button title="Clean values" onPress={cleanValues} />
-            <Button title="Continue" onPress={saveValuesOnLocalStorage} />
+            <ButtonLang title="Clean values" onPress={cleanValues} />
+            <ButtonLang title="Continue" onPress={saveValuesOnLocalStorage} />
           </View>
         </View>
       </SafeAreaView>
