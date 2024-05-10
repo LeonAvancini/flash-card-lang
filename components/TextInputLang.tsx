@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { TextInput, TextInputProps } from "react-native";
+import { Keyboard, TextInput, TextInputProps } from "react-native";
 
 const TextInputLang: FC<TextInputProps> = (props) => {
   return (
@@ -7,6 +7,9 @@ const TextInputLang: FC<TextInputProps> = (props) => {
       {...props}
       placeholderTextColor="#d3d3d3"
       textAlignVertical="top"
+      onBlur={() => {
+        Keyboard.dismiss();
+      }}
     />
   );
 };

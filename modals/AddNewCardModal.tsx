@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     minWidth: "100%",
+    borderRadius: 10,
   },
   header: {
     flexDirection: "row",

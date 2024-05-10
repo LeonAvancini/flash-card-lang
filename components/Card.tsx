@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { FC, useEffect, useState } from "react";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export interface Word {
   source: string;
@@ -8,26 +8,48 @@ export interface Word {
 }
 
 interface CardProps {
-  word: Word;
+  word?: Word;
   onTouchHandler: () => void;
+  isShowingTranslation: (value: boolean) => void;
 }
+
 const Card: FC<CardProps> = (props) => {
-  const { word, onTouchHandler } = props;
+  const { word, onTouchHandler, isShowingTranslation } = props;
   const [showTranslation, setShowTranslation] = useState(false);
+  const [displayedWord, setDisplayedWord] = useState(word);
+
+  if (!word) return null;
+
+  useEffect(() => {
+    isShowingTranslation(!showTranslation);
+  }, [showTranslation]);
 
   const toggleTranslation = () => {
-    if (showTranslation) {
+    if (!showTranslation) {
       onTouchHandler();
-      setShowTranslation(!showTranslation);
+      setShowTranslation((prevState) => !prevState);
       return;
     }
-    setShowTranslation(!showTranslation);
+
+    const shouldSwap = Math.random() < 0.5;
+    if (shouldSwap) {
+      setDisplayedWord({
+        source: word.value,
+        value: word.source,
+        assertions: word.assertions,
+      });
+    } else {
+      setDisplayedWord(word);
+    }
+    setShowTranslation((prevState) => !prevState);
   };
 
   return (
     <TouchableOpacity style={styles.card} onPress={toggleTranslation}>
-      <Text style={styles.source}>{word.source}</Text>
-      {showTranslation && <Text style={styles.translation}>{word.value}</Text>}
+      <Text style={styles.source}>{displayedWord?.source}</Text>
+      {showTranslation && (
+        <Text style={styles.translation}>{displayedWord?.value}</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -40,15 +62,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
   source: {
-    fontSize: 20,
+    fontSize: 35,
     fontWeight: "bold",
+    textAlign: "center",
   },
   translation: {
-    fontSize: 16,
+    fontSize: 20,
     marginTop: 10,
     color: "gray",
+    textAlign: "center",
   },
 });
 

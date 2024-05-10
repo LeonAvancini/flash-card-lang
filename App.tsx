@@ -17,6 +17,8 @@ export default function App() {
   const [showAddCardModal, setShowAddCardModal] = useState<boolean>(false);
   const [showImportJsonModal, setShowImportJsonModal] =
     useState<boolean>(false);
+  const [isAssertionButtonDisabled, setIsAssertionButtonDisabled] =
+    useState<boolean>(false);
   const [savedWords, setSavedWords] = useState<Word[]>([]);
   const [word, setWord] = useState<Word>();
 
@@ -71,7 +73,21 @@ export default function App() {
         />
       </View>
       <View style={styles.container}>
-        {word && <Card word={word} onTouchHandler={selectRandomWord} />}
+        <Card
+          word={word}
+          onTouchHandler={selectRandomWord}
+          isShowingTranslation={setIsAssertionButtonDisabled}
+        />
+        {!!savedWords.length && (
+          <View>
+            <ButtonLang
+              title="I got it right! 🤓"
+              onPress={() => console.log("test")}
+              extraStyles={styles.assertionButton}
+              disabled={isAssertionButtonDisabled}
+            />
+          </View>
+        )}
         {!savedWords.length && (
           <Text style={styles.noCardText}>
             Looks like you don't have any cards created. You can add a new one.
@@ -105,13 +121,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "space-between",
     width: "100%",
   },
   noCardText: {
     textAlign: "center",
     fontSize: 20,
-    marginTop: 20,
+    marginTop: "100%",
+    justifyContent: "center",
+  },
+  assertionButton: {
+    backgroundColor: "green",
+    height: 100,
   },
 });

@@ -50,7 +50,14 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.header}>
-          <ButtonLang title="Go back" onPress={onCloseHandler} />
+          <ButtonLang
+            title="Go back"
+            onPress={() => {
+              onCloseHandler();
+              setJsonData("");
+            }}
+          />
+          <ButtonLang title="Import" onPress={saveJsonToLocalStorage} />
         </View>
         <View style={styles.container}>
           <Text style={styles.title}>Import JSON Data</Text>
@@ -72,10 +79,6 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
             value={jsonData}
             onChangeText={(text) => setJsonData(text)}
           />
-          <View style={styles.buttonContainer}>
-            <ButtonLang title="Clean" onPress={() => setJsonData("")} />
-            <ButtonLang title="Import" onPress={saveJsonToLocalStorage} />
-          </View>
         </View>
       </SafeAreaView>
     </Modal>
@@ -106,18 +109,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     width: "95%",
-    height: "80%",
+    height: "50%",
+    borderRadius: 10,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     width: "100%",
     marginBottom: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "80%",
   },
 });
 
