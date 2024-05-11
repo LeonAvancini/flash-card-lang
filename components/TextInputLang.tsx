@@ -1,10 +1,24 @@
 import React, { FC } from "react";
-import { Keyboard, TextInput, TextInputProps } from "react-native";
+import {
+  Keyboard,
+  TextInput,
+  TextInputProps,
+  StyleSheet,
+  StyleProp,
+  TextStyle,
+} from "react-native";
 
-const TextInputLang: FC<TextInputProps> = (props) => {
+interface TextInputLangProps extends TextInputProps {
+  extraStyles?: StyleProp<TextStyle>;
+}
+
+const TextInputLang: FC<TextInputLangProps> = (props) => {
+  const { extraStyles } = props;
+
   return (
     <TextInput
       {...props}
+      style={[styles.baseInputStyle, extraStyles]}
       placeholderTextColor="#d3d3d3"
       textAlignVertical="top"
       onBlur={() => {
@@ -13,5 +27,16 @@ const TextInputLang: FC<TextInputProps> = (props) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  baseInputStyle: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 15,
+    marginBottom: 10,
+    minWidth: "100%",
+    height: 50
+  },
+});
 
 export default TextInputLang;

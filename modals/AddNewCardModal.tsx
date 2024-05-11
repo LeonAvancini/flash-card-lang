@@ -55,27 +55,37 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.header}>
-          <ButtonLang title="Go back" onPress={onCloseHandler} />
+          <ButtonLang
+            title="Back"
+            onPress={onCloseHandler}
+            extraStyles={styles.buttonStyle}
+          />
+          <ButtonLang
+            title="Reset form"
+            onPress={cleanValues}
+            extraStyles={styles.buttonStyle}
+          />
         </View>
         <View style={styles.container}>
-          <Text style={styles.title}>Add some values for learn :)</Text>
+          <Text style={styles.title}>New Card</Text>
           <View style={styles.inputContainer}>
             <TextInputLang
-              style={styles.input}
               placeholder="Das Auto"
               value={source}
               onChangeText={(text) => setSource(text)}
             />
             <TextInputLang
-              style={styles.input}
               placeholder="Car"
               value={value}
               onChangeText={(text) => setValue(text)}
             />
-          </View>
-          <View style={styles.buttonContainer}>
-            <ButtonLang title="Clean values" onPress={cleanValues} />
-            <ButtonLang title="Continue" onPress={saveValuesOnLocalStorage} />
+            <View style={styles.buttonContainer}>
+              <ButtonLang
+                extraStyles={styles.buttonStyle}
+                title="Create"
+                onPress={saveValuesOnLocalStorage}
+              />
+            </View>
           </View>
         </View>
       </SafeAreaView>
@@ -87,7 +97,14 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: "center",
-    marginHorizontal: 20,
+    margin: 20,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    width: "100%",
+    marginBottom: 10,
+    gap: 2,
   },
   container: {
     flex: 1,
@@ -97,31 +114,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginVertical: 30,
   },
   inputContainer: {
     display: "flex",
     flexDirection: "column",
-    width: "80%",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 10,
-    minWidth: "100%",
-    borderRadius: 10,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    width: "100%",
-    marginBottom: 10,
+    gap: 10,
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    width: "80%",
+  },
+  buttonStyle: {
+    flex: 1,
   },
 });
 

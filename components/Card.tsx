@@ -18,11 +18,11 @@ const Card: FC<CardProps> = (props) => {
   const [showTranslation, setShowTranslation] = useState(false);
   const [displayedWord, setDisplayedWord] = useState(word);
 
-  if (!word) return null;
-
   useEffect(() => {
     isShowingTranslation(!showTranslation);
   }, [showTranslation]);
+
+  if (!word) return null;
 
   const toggleTranslation = () => {
     if (!showTranslation) {
@@ -57,8 +57,6 @@ const Card: FC<CardProps> = (props) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#f0f0f0",
-    padding: 20,
-    margin: 10,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",

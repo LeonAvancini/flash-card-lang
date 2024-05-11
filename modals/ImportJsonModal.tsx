@@ -7,9 +7,12 @@ import {
   Alert,
   Text,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import ButtonLang from "../components/ButtonLang";
 import TextInputLang from "../components/TextInputLang";
+import { PLACEHOLDER } from "../utils/constants";
+import DismissKeyboardView from "../components/DismissKeyboardView";
 
 //TODO: Allow users to upload json file instead paste an array.
 interface ImportJsonModalProps {
@@ -46,41 +49,50 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
     }
   };
 
+  const cleanValues = () => {
+    setJsonData("");
+  };
+
   return (
     <Modal visible={visible} animationType="slide">
-      <SafeAreaView style={styles.mainContainer}>
-        <View style={styles.header}>
-          <ButtonLang
-            title="Go back"
-            onPress={() => {
-              onCloseHandler();
-              setJsonData("");
-            }}
-          />
-          <ButtonLang title="Import" onPress={saveJsonToLocalStorage} />
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.title}>Import JSON Data</Text>
-          <TextInputLang
-            style={styles.input}
-            placeholder={`Paste JSON here without {}:
-          [
-            {
-              "source": "Der Apfel",
-              "value": "The apple"
-            },
-            {
-              "source": "Die Katze",
-              "value": "The cat"
-            }
-          ]
-          `}
-            multiline
-            value={jsonData}
-            onChangeText={(text) => setJsonData(text)}
-          />
-        </View>
-      </SafeAreaView>
+      <DismissKeyboardView>
+        <SafeAreaView style={styles.mainContainer}>
+          <View style={styles.header}>
+            <ButtonLang
+              title="Back"
+              onPress={() => {
+                onCloseHandler();
+                setJsonData("");
+              }}
+              extraStyles={styles.buttonStyle}
+            />
+            <ButtonLang
+              title="Reset form"
+              onPress={cleanValues}
+              extraStyles={styles.buttonStyle}
+            />
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.title}>
+              {`Paste JSON here without curly braces { }`}
+            </Text>
+            <TextInputLang
+              extraStyles={styles.input}
+              placeholder={PLACEHOLDER}
+              multiline
+              value={jsonData}
+              onChangeText={(text) => setJsonData(text)}
+            />
+            <View style={styles.buttonContainer}>
+              <ButtonLang
+                title="Import"
+                onPress={saveJsonToLocalStorage}
+                extraStyles={styles.buttonStyle}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
+      </DismissKeyboardView>
     </Modal>
   );
 };
@@ -101,22 +113,24 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginVertical: 30,
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 10,
-    width: "95%",
-    height: "50%",
-    borderRadius: 10,
+    flex: 1,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 10,
+    gap: 2,
+    ...(Platform.OS === "android" && { marginTop: 20 }),
+  },
+  buttonStyle: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginVertical: 15,
   },
 });
 
