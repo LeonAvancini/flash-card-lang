@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
+import ButtonLang from "./ButtonLang";
 
 export interface Word {
   source: string;
@@ -8,53 +9,67 @@ export interface Word {
 }
 
 interface CardProps {
-  word?: Word;
+  word: Word;
   onTouchHandler: () => void;
-  isShowingTranslation: (value: boolean) => void;
+  onWordAsserted: (word: Word) => void;
 }
 
 const Card: FC<CardProps> = (props) => {
-  const { word, onTouchHandler, isShowingTranslation } = props;
+  const { word, onTouchHandler, onWordAsserted } = props;
   const [showTranslation, setShowTranslation] = useState(false);
   const [displayedWord, setDisplayedWord] = useState(word);
 
-  useEffect(() => {
-    isShowingTranslation(!showTranslation);
-  }, [showTranslation]);
-
-  if (!word) return null;
-
   const toggleTranslation = () => {
     if (!showTranslation) {
+      setShowTranslation(true);
       onTouchHandler();
-      setShowTranslation((prevState) => !prevState);
       return;
     }
 
     const shouldSwap = Math.random() < 0.5;
     if (shouldSwap) {
       setDisplayedWord({
+        ...word,
         source: word.value,
         value: word.source,
-        assertions: word.assertions,
       });
     } else {
       setDisplayedWord(word);
     }
-    setShowTranslation((prevState) => !prevState);
+    setShowTranslation(false);
   };
 
   return (
-    <TouchableOpacity style={styles.card} onPress={toggleTranslation}>
-      <Text style={styles.source}>{displayedWord?.source}</Text>
-      {showTranslation && (
-        <Text style={styles.translation}>{displayedWord?.value}</Text>
-      )}
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.card} onPress={toggleTranslation}>
+        <Text style={styles.source}>{displayedWord?.source}</Text>
+        {showTranslation && (
+          <Text style={styles.translation}>{displayedWord?.value}</Text>
+        )}
+      </TouchableOpacity>
+      <View>
+        <ButtonLang
+          title="I got it right! 🤓"
+          onPress={() => {
+            onWordAsserted(displayedWord);
+            toggleTranslation();
+          }}
+          extraStyles={styles.assertionButton}
+          disabled={!showTranslation}
+        />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 15,
+    justifyContent: "space-between",
+    gap: 15,
+    width: "100%",
+  },
   card: {
     backgroundColor: "#f0f0f0",
     borderRadius: 10,
@@ -72,6 +87,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "gray",
     textAlign: "center",
+  },
+  assertionButton: {
+    backgroundColor: "green",
+    height: 100,
   },
 });
 

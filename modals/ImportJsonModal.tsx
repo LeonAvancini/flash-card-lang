@@ -18,12 +18,12 @@ import DismissKeyboardView from "../components/DismissKeyboardView";
 interface ImportJsonModalProps {
   visible: boolean;
   onCloseHandler: () => void;
+  onFetchHandler: () => Promise<void>;
 }
 
-const ImportJsonModal: FC<ImportJsonModalProps> = ({
-  visible,
-  onCloseHandler,
-}) => {
+const ImportJsonModal: FC<ImportJsonModalProps> = (props) => {
+  const { visible, onCloseHandler, onFetchHandler } = props;
+
   const [jsonData, setJsonData] = useState("");
 
   const saveJsonToLocalStorage = async () => {
@@ -35,14 +35,15 @@ const ImportJsonModal: FC<ImportJsonModalProps> = ({
       for (const item of parsedData) {
         if (!item.source || !item.value) {
           throw new Error(
-            "Each item in the array must have 'source', 'value' properties."
+            "Each item in the array must have 'source' and 'value' properties."
           );
         }
-        item.assertion = 0;
+        item.assertions = 0; // Adding assertion property to each item
       }
-
+  
       await AsyncStorage.setItem("wordList", JSON.stringify(parsedData));
       setJsonData("");
+      await onFetchHandler();
       onCloseHandler();
     } catch (error: any) {
       Alert.alert("Error", error.message);

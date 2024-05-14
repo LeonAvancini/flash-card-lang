@@ -14,12 +14,12 @@ import TextInputLang from "../components/TextInputLang";
 interface AddNewCardModalProps {
   visible: boolean;
   onCloseHandler: () => void;
+  onFetchHandler: () => Promise<void>;
 }
 
-const AddNewCardModal: FC<AddNewCardModalProps> = ({
-  visible,
-  onCloseHandler,
-}) => {
+const AddNewCardModal: FC<AddNewCardModalProps> = (props) => {
+  const { visible, onCloseHandler, onFetchHandler } = props;
+
   const [source, setSource] = useState("");
   const [value, setValue] = useState("");
 
@@ -38,7 +38,9 @@ const AddNewCardModal: FC<AddNewCardModalProps> = ({
         existingList.push(newElement);
 
         await AsyncStorage.setItem("wordList", JSON.stringify(existingList));
+
         cleanValues();
+        await onFetchHandler();
         onCloseHandler();
       } catch (e) {
         Alert.alert("Error saving");

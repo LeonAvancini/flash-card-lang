@@ -1,32 +1,34 @@
-import {
-  Alert,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Platform,
-} from "react-native";
-import Card, { Word } from "./components/Card";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import {
+  Alert,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import ButtonLang from "./components/ButtonLang";
+import Card, { Word } from "./components/Card";
 import AddNewCardModal from "./modals/AddNewCardModal";
 import ImportJsonModal from "./modals/ImportJsonModal";
-import ButtonLang from "./components/ButtonLang";
+import { pickRandomWordBasedOnAssertions } from "./utils/selectRandomWord";
 
 export default function App() {
   const [showAddCardModal, setShowAddCardModal] = useState<boolean>(false);
   const [showImportJsonModal, setShowImportJsonModal] =
     useState<boolean>(false);
-  const [isAssertionButtonDisabled, setIsAssertionButtonDisabled] =
-    useState<boolean>(false);
-  const [savedWords, setSavedWords] = useState<Word[]>([]);
-  const [word, setWord] = useState<Word>();
 
-  const selectRandomWord = () => {
-    //TODO: Random value should consider weight of values based on assertion value, implement logic after user is able to press a button when they assert
-    const randomIndex = Math.floor(Math.random() * savedWords.length);
-    setWord(savedWords[randomIndex]);
-  };
+  const [savedWords, setSavedWords] = useState<Word[]>([]);
+  const [selectedWord, setSelectedWord] = useState<Word | null>();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    selectRandomWord();
+  }, [savedWords]);
 
   const fetchData = async () => {
     try {
@@ -38,18 +40,34 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [showAddCardModal, showImportJsonModal]);
-
-  useEffect(() => {
-    if (!word) {
-      selectRandomWord();
+  const selectRandomWord = () => {
+    if (savedWords.length === 0) {
+      setSelectedWord(null);
+      return;
     }
-  }, [savedWords]);
+    const papa = pickRandomWordBasedOnAssertions(savedWords);
+    setSelectedWord(papa);
+  };
 
-  const onAssertion = () => {
-    console.log("On assertion do something");
+  const updateWordAssertion = async (assertedWord: Word) => {
+    try {
+      const wordIndex = savedWords.findIndex(
+        (word) =>
+          word.source === assertedWord.source &&
+          word.value === assertedWord.value
+      );
+      if (wordIndex !== -1) {
+        const updatedWords = [...savedWords];
+        updatedWords[wordIndex] = {
+          ...assertedWord,
+          assertions: assertedWord.assertions + 1,
+        };
+        await AsyncStorage.setItem("wordList", JSON.stringify(updatedWords));
+        setSavedWords(updatedWords);
+      }
+    } catch (e) {
+      Alert.alert("Error updating your assertion");
+    }
   };
 
   const toggleAddCardModal = () => {
@@ -75,21 +93,12 @@ export default function App() {
         />
       </View>
       <View style={styles.container}>
-        <Card
-          word={word}
-          onTouchHandler={selectRandomWord}
-          isShowingTranslation={setIsAssertionButtonDisabled}
-        />
-
-        {!!savedWords.length && (
-          <View>
-            <ButtonLang
-              title="I got it right! 🤓"
-              onPress={onAssertion}
-              extraStyles={styles.assertionButton}
-              disabled={isAssertionButtonDisabled}
-            />
-          </View>
+        {selectedWord && (
+          <Card
+            word={selectedWord}
+            onTouchHandler={selectRandomWord}
+            onWordAsserted={updateWordAssertion}
+          />
         )}
 
         {!savedWords.length && (
@@ -102,10 +111,12 @@ export default function App() {
       <AddNewCardModal
         visible={showAddCardModal}
         onCloseHandler={toggleAddCardModal}
+        onFetchHandler={fetchData}
       />
       <ImportJsonModal
         visible={showImportJsonModal}
         onCloseHandler={toggleImportJsonModal}
+        onFetchHandler={fetchData}
       />
     </SafeAreaView>
   );
@@ -140,9 +151,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "100%",
     justifyContent: "center",
-  },
-  assertionButton: {
-    backgroundColor: "green",
-    height: 100,
   },
 });
